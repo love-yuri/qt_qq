@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qss/mainwindow.qss</file>
+        <file>qss/left_wid.qss</file>
+        <file>qss/main_wid.qss</file>
+
+        <file>icons/促销.png</file>
+        <file>icons/冠军.png</file>
+        <file>icons/打卡.png</file>
+        <file>icons/拍照.png</file>
+        <file>icons/数据.png</file>
+        <file>icons/档案.png</file>
+        <file>icons/积分.png</file>
+        <file>icons/评论.png</file>
+        <file>icons/钱包.png</file>
+        <file>icons/smile.png</file>
+        <file>icons/smile_1.png</file>
+        <file>icons/folder-close (1).png</file>
+        <file>icons/folder-close.png</file>
+        <file>icons/文件夹 (1).png</file>
+        <file>icons/文件夹.png</file>
+        <file>icons/mic (1).png</file>
+        <file>icons/mic.png</file>
+        <file>icons/picture (1).png</file>
+        <file>icons/picture.png</file>
+        <file>icons/裁剪 (1).png</file>
+        <file>icons/裁剪.png</file>
+        <file>icons/红包 (1).png</file>
+        <file>icons/红包.png</file>
+        <file>icons/time (1).png</file>
+        <file>icons/time.png</file>
+
+        <file>picture/avatar.jpg</file>
+    </qresource>
+</RCC>

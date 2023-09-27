@@ -1,0 +1,33 @@
+#main_wid {
+  background-color: #F2F2F2;
+}
+
+QSplitter::handle::section {
+  background-color: #E8E8E8;
+  width: 2px;
+  border: none;
+}
+
+ToolButton {
+  border: none;
+}
+
+QTextEdit {
+  background-color: #F2F2F2;
+  font-size: 24px;
+  font-family: 'Microsoft Yahei';
+  border: none;
+}
+
+QScrollArea {
+  border: none;
+}
+
+
+
+Chat QLabel {
+  border-radius: 5px;
+  border: none;
+  background-color: #0099FF;
+  /* padding: 8px; */
+}

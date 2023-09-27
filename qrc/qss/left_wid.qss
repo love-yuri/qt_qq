@@ -1,0 +1,17 @@
+QToolButton {
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+#left_wid {
+  background-color: #E5E5E5;
+}
+
+QToolButton:hover {
+  background-color: #DCDCDC;
+}
+
+QToolButton:pressed {
+  background-color: #b8b8a9;
+}

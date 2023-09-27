@@ -1,0 +1,15 @@
+**/*.out
+**/*.class
+**/*.user
+**/.idea/
+**/*.o
+**/cmake-build-debug/
+**/cmake-build-Release/
+**/*build/
+**/build*/
+**/.cache/
+**/.ccls-cache
+**/.idea/
+**/devel/
+**/*.so
+**/*.exe
