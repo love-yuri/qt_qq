@@ -63,6 +63,11 @@
    </item>
    <item>
     <widget class="QWidget" name="widget" native="true">
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+  border: none;
+}</string>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
        <number>0</number>
@@ -86,6 +91,9 @@
           <horstretch>0</horstretch>
           <verstretch>1</verstretch>
          </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QFrame {border:none;}</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -172,6 +180,9 @@
           <verstretch>1</verstretch>
          </sizepolicy>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QFrame {border:none;}</string>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -207,7 +218,8 @@
   border: none;
   font-size: 20px;
   font-family: 'Microsoft Yahei';
-}</string>
+}
+QFrame {border:none;}</string>
            </property>
            <property name="text">
             <string>这是一条测试信息.</string>

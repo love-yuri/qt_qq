@@ -28,6 +28,10 @@
        <height>70</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame {border:none;},
+QFrame {border:none;}</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -83,6 +87,9 @@
           <width>40</width>
           <height>40</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QToolButton {border:none;}</string>
         </property>
         <property name="text">
          <string/>

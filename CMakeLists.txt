@@ -6,7 +6,7 @@ project(yuri VERSION 0.1 LANGUAGES CXX)
 # pacman -S mingw-w64-x86_64-qt6
 # pacman -S mingw-w64-x86_64-cmake
 
-set(CMAKE_PREFIX_PATH "C:\\msys64\\mingw64\\lib\\cmake") # qt库目录
+#set(CMAKE_PREFIX_PATH "C:\\msys64\\mingw64\\lib\\cmake") # qt库目录
 
 set(CMAKE_AUTOUIC ON) # 自动编译ui文件
 set(CMAKE_AUTOMOC ON) # 自动编译moc文件
