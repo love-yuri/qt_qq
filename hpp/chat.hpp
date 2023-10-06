@@ -33,7 +33,7 @@ public:
     ui->setupUi(this);
   }
 
-  Chat(const QTextDocument *document, bool is_me = false) :
+  Chat(const QTextDocument *document, bool is_me = true) :
     ui(new Ui::Chat), is_me(is_me) {
     ui->setupUi(this);
     init(document);

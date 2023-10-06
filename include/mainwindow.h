@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "include/tcp_client.h"
 #include <qmainwindow.h>
 #include <qtconfigmacros.h>
 #include <qwidget.h>
@@ -28,6 +29,7 @@ private:
   Ui::Send *send_ui;
   Ui::MsgList *msg_list_ui;
   QWidget *window;
+  TcpClient *client;
 
   void addScrollArea(QWidget *parent);
 };

@@ -31,13 +31,16 @@
 #include <QScrollBar>
 #include "../ui/ui_msg_list.h"
 #include "hpp/msg_info.hpp"
+#include "include/message.h"
+#include "include/tcp_client.h"
 
 MainWindow::MainWindow(QMainWindow *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow),
   send_ui(new Ui::Send),
   msg_list_ui(new Ui::MsgList),
-  window(new QWidget(this)) {
+  window(new QWidget(this)),
+  client(new TcpClient(this)) {
   ui->setupUi(this);
   yuri::Tools::init();
   yuri::Tools::loadQss(":qss/left_wid.qss", ui->left_wid);
@@ -68,6 +71,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
   r_splitter->setSizes({600, 300});
   ui->main_wid->setLayout(layout);
 
+  
+  client->start("127.0.0.1", 2078);
+  if (client->login("yuri", "miku2078")) {
+    client->startToRead();
+  }
   addScrollArea(r_top);
   show();
 }
@@ -98,13 +106,31 @@ void MainWindow::addScrollArea(QWidget *parent) {
   area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
   connect(send_ui->pushButton, &QPushButton::clicked, [area, this, parent, pLayout]() {
-    static bool is_me = false;
-    auto chat = new Chat(send_ui->textEdit->document(), is_me);
+    auto chat = new Chat(send_ui->textEdit->document());
+    client->write(send_ui->textEdit->toPlainText().toUtf8());
     chat->setAvatar(":/picture/avatar.jpg");
     pLayout->addWidget(chat);
     QScrollBar *bar = area->verticalScrollBar();
     bar->setValue(bar->maximum());
-    is_me = !is_me;
+  });
+
+  connect(client, &TcpClient::getData, [this, pLayout, area](const TcpClient::Message msg) {
+    QTextDocument docu = QTextDocument(msg.byte);
+    auto chat = new Chat(&docu, false);
+    chat->setAvatar(":/picture/avatar.jpg");
+    pLayout->addWidget(chat);
+    QScrollBar *bar = area->verticalScrollBar();
+    bar->setValue(bar->maximum());
+    // qdebug << msg.byte;
+  });
+
+  connect(send_ui->msg_history, &QToolButton::clicked, [this, area, pLayout]() {
+    QTextDocument docu = QTextDocument(client->sendCommand(C_USERS_SIZE));
+    auto chat = new Chat(&docu, false);
+    chat->setAvatar(":/picture/avatar.jpg");
+    pLayout->addWidget(chat);
+    QScrollBar *bar = area->verticalScrollBar();
+    bar->setValue(bar->maximum());
   });
 
   area->widget()->setLayout(pLayout); // 把布局放置到QScrollArea的内部QWidget中

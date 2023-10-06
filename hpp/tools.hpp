@@ -108,7 +108,6 @@ private:
       file.close();
     }
     mutex.unlock();
-    QMessageLogger().info();
   }
 };
 

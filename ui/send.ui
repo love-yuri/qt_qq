@@ -46,6 +46,9 @@
           <height>38</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>...</string>
         </property>
@@ -75,6 +78,9 @@
           <width>39</width>
           <height>38</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>...</string>
@@ -106,6 +112,9 @@
           <height>38</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>...</string>
         </property>
@@ -136,6 +145,9 @@
           <height>38</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>...</string>
         </property>
@@ -165,6 +177,9 @@
           <width>39</width>
           <height>38</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>...</string>
@@ -197,6 +212,9 @@
           <width>38</width>
           <height>38</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string/>
@@ -231,7 +249,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="ToolButton" name="toolButton_7">
+       <widget class="ToolButton" name="msg_history">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -243,6 +261,9 @@
           <width>39</width>
           <height>38</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>...</string>
