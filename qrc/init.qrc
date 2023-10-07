@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>qss/mainwindow.qss</file>
+        <file>qss/index.qss</file>
         <file>qss/left_wid.qss</file>
-        <file>qss/main_wid.qss</file>
+        <file>qss/message_w.qss</file>
 
         <file>icons/促销.png</file>
         <file>icons/冠军.png</file>
@@ -29,6 +29,8 @@
         <file>icons/红包.png</file>
         <file>icons/time (1).png</file>
         <file>icons/time.png</file>
+        <file>icons/add.png</file>
+        <file>icons/search.png</file>
 
         <file>picture/avatar.jpg</file>
     </qresource>

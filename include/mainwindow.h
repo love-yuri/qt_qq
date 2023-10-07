@@ -1,3 +1,10 @@
+/*
+ * @Author: love-yuri yuri2078170658@gmail.com
+ * @Date: 2023-10-06 13:22:42
+ * @LastEditTime: 2023-10-07 14:51:43
+ * @Description: 主窗口头
+ */
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -11,9 +18,9 @@ namespace Ui {
 class MainWindow;
 class Send;
 class MsgList;
-}
-QT_END_NAMESPACE
+} // namespace Ui
 
+QT_END_NAMESPACE
 
 class MainWindow : QMainWindow {
   Q_OBJECT
@@ -25,14 +32,14 @@ public:
   void paintEvent(QPaintEvent *event) override;
 
 private:
+  /* 各种ui合集 */
   Ui::MainWindow *ui;
   Ui::Send *send_ui;
   Ui::MsgList *msg_list_ui;
   QWidget *window;
   TcpClient *client;
 
-  void addScrollArea(QWidget *parent);
+  void addScrollArea();
 };
 
-
-#endif 
+#endif

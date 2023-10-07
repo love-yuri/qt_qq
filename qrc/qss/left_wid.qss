@@ -1,7 +1,7 @@
 QToolButton {
   border: none;
   border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent;
 }
 
 #left_wid {

@@ -1,0 +1,8 @@
+QPushButton, QToolButton , QLineEdit{
+    background-color: none;
+    border: none;
+}
+
+QLineEdit {
+    background-color: #f2f2f2;
+}

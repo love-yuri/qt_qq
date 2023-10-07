@@ -1,6 +1,5 @@
 #include "include/mainwindow.h"
 #include "../ui/ui_mainwindow.h"
-#include "../ui/ui_send.h"
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QResizeEvent>
@@ -23,13 +22,13 @@
 #include <qtoolbutton.h>
 #include <qwidget.h>
 #include <QFontMetrics>
+#include "hpp/toolbutton.hpp"
 #include "hpp/tools.hpp"
 #include "hpp/chat.hpp"
 #include <QSplitter>
 #include <QTextBlock>
 #include <QMessageLogger>
 #include <QScrollBar>
-#include "../ui/ui_msg_list.h"
 #include "hpp/msg_info.hpp"
 #include "include/message.h"
 #include "include/tcp_client.h"
@@ -37,46 +36,31 @@
 MainWindow::MainWindow(QMainWindow *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow),
-  send_ui(new Ui::Send),
-  msg_list_ui(new Ui::MsgList),
   window(new QWidget(this)),
   client(new TcpClient(this)) {
   ui->setupUi(this);
   yuri::Tools::init();
-  yuri::Tools::loadQss(":qss/left_wid.qss", ui->left_wid);
-  yuri::Tools::loadQss(":qss/main_wid.qss", ui->main_wid);
 
-  QHBoxLayout *layout = new QHBoxLayout(ui->main_wid);
-  QSplitter *splitter = new QSplitter(Qt::Horizontal, ui->main_wid);
-  QWidget *leftLabel = new QWidget(splitter); // 左边消息列表
-  leftLabel->setMinimumWidth(450);
-  msg_list_ui->setupUi(leftLabel);
-  QVBoxLayout *pLayout = new QVBoxLayout();
-  pLayout->setAlignment(Qt::AlignTop);
-  msg_list_ui->scrollAreaWidgetContents->setLayout(pLayout);
-  connect(msg_list_ui->pushButton, &QPushButton::clicked, [this, pLayout]() {
-    MsgInfo *info = new MsgInfo;
-    pLayout->addWidget(info);
+  yuri::Tools::loadQss(":qss/index.qss", this);
+  yuri::Tools::loadQss(":qss/left_wid.qss", ui->left_wid);
+  yuri::Tools::loadQss(":qss/message_w.qss", ui->message_w);
+
+  ui->msg_main_sp->setSizes({ 700, 500});
+
+  // client->start("127.0.0.1", 2078);
+  // if (client->login("yuri", "miku2078")) {
+  //   client->startToRead();
+  // }
+  addScrollArea();
+
+  connect(ui->contack_person_b, &ToolButton::clicked, [this]() {
+    ui->stackedWidget->setCurrentIndex(1);
   });
 
-  QSplitter *r_splitter = new QSplitter(Qt::Vertical, splitter);
-  QWidget *r_top = new QWidget(r_splitter); // 右上对话列表
-  QWidget *r_but = new QWidget(r_splitter); // 右下聊天输入框
-  send_ui->setupUi(r_but);
-  r_but->setMinimumHeight(300);
-  r_but->setMaximumHeight(500);
-  layout->addWidget(splitter);
-  layout->setContentsMargins(0, 0, 0, 0);
-  splitter->setSizes({400, 1000});
-  r_splitter->setSizes({600, 300});
-  ui->main_wid->setLayout(layout);
+  connect(ui->message_b, &ToolButton::clicked, [this]() {
+    ui->stackedWidget->setCurrentIndex(0);
+  });
 
-  
-  client->start("127.0.0.1", 2078);
-  if (client->login("yuri", "miku2078")) {
-    client->startToRead();
-  }
-  addScrollArea(r_top);
   show();
 }
 
@@ -90,50 +74,46 @@ void MainWindow::paintEvent(QPaintEvent *event) {
 
 MainWindow::~MainWindow() {
   delete ui;
-  delete send_ui;
 }
-
 
 // private function
 
-void MainWindow::addScrollArea(QWidget *parent) {
-  QHBoxLayout *layout = new QHBoxLayout;
-  QScrollArea *area = new QScrollArea();
-  area->setWidgetResizable(true);
-  area->setWidget(new QWidget(area));
-  QVBoxLayout *pLayout = new QVBoxLayout(); 
-  pLayout->setAlignment(Qt::AlignTop);
-  area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+void MainWindow::addScrollArea() {
+  {
+    QVBoxLayout *layout = new QVBoxLayout(ui->msg_scroll);
+    layout->setAlignment(Qt::AlignTop);
+    connect(ui->search_but, &QPushButton::clicked, [this, layout]() {
+      MsgInfo *info = new MsgInfo;
+      layout->addWidget(info);
+    });
+  }
+  {
+    QVBoxLayout *layout = new QVBoxLayout(ui->chat_scroll);
+    layout->setAlignment(Qt::AlignTop);
+    connect(ui->send_msg_b, &QPushButton::clicked, [this, layout]() {
+      auto chat = new Chat(ui->send_msg_edit->document());
+      // client->write(send_ui->textEdit->toPlainText().toUtf8());
+      chat->setAvatar(":/picture/avatar.jpg");
+      layout->addWidget(chat);
+    });
+  }
 
-  connect(send_ui->pushButton, &QPushButton::clicked, [area, this, parent, pLayout]() {
-    auto chat = new Chat(send_ui->textEdit->document());
-    client->write(send_ui->textEdit->toPlainText().toUtf8());
-    chat->setAvatar(":/picture/avatar.jpg");
-    pLayout->addWidget(chat);
-    QScrollBar *bar = area->verticalScrollBar();
-    bar->setValue(bar->maximum());
-  });
+  // connect(send_ui->pushButton, &QPushButton::clicked, [area, this, parent, pLayout]() {
+  //   auto chat = new Chat(send_ui->textEdit->document());
+  //   client->write(send_ui->textEdit->toPlainText().toUtf8());
+  //   chat->setAvatar(":/picture/avatar.jpg");
+  //   pLayout->addWidget(chat);
+  //   QScrollBar *bar = area->verticalScrollBar();
+  //   bar->setValue(bar->maximum());
+  // });
 
-  connect(client, &TcpClient::getData, [this, pLayout, area](const TcpClient::Message msg) {
-    QTextDocument docu = QTextDocument(msg.byte);
-    auto chat = new Chat(&docu, false);
-    chat->setAvatar(":/picture/avatar.jpg");
-    pLayout->addWidget(chat);
-    QScrollBar *bar = area->verticalScrollBar();
-    bar->setValue(bar->maximum());
-    // qdebug << msg.byte;
-  });
-
-  connect(send_ui->msg_history, &QToolButton::clicked, [this, area, pLayout]() {
-    QTextDocument docu = QTextDocument(client->sendCommand(C_USERS_SIZE));
-    auto chat = new Chat(&docu, false);
-    chat->setAvatar(":/picture/avatar.jpg");
-    pLayout->addWidget(chat);
-    QScrollBar *bar = area->verticalScrollBar();
-    bar->setValue(bar->maximum());
-  });
-
-  area->widget()->setLayout(pLayout); // 把布局放置到QScrollArea的内部QWidget中
-  layout->addWidget(area);
-  parent->setLayout(layout);
+  // connect(client, &TcpClient::getData, [this, pLayout, area](const TcpClient::Message msg) {
+  //   QTextDocument docu = QTextDocument(msg.byte);
+  //   auto chat = new Chat(&docu, false);
+  //   chat->setAvatar(":/picture/avatar.jpg");
+  //   pLayout->addWidget(chat);
+  //   QScrollBar *bar = area->verticalScrollBar();
+  //   bar->setValue(bar->maximum());
+  //   // qdebug << msg.byte;
+  // });
 }
