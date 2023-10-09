@@ -22,8 +22,7 @@ find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 COMPONENTS StateMachine REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Sql)
 
-# 设置翻译文件
-set(TS_FILES yuri_zh_CN.ts)
+# 全局包含头文件
 INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}
 )
@@ -35,12 +34,11 @@ file(GLOB QRC_FILE ${PROJECT_SOURCE_DIR}/qrc/*.qrc)
 file(GLOB HPP_FILE ${PROJECT_SOURCE_DIR}/hpp/*.hpp)
 
 
-set(LIB_FILES ${TS_FILES} ${SRC_FILE} ${HEAD_FILE} ${UI_FILE} ${QRC_FILE} ${HPP_FILE})
+set(LIB_FILES ${SRC_FILE} ${HEAD_FILE} ${UI_FILE} ${QRC_FILE} ${HPP_FILE})
 
 # 添加项目文件
 set(PROJECT_SOURCES
     main.cpp
-    ${TS_FILES}
     ${LIB_FILES}
 )
 

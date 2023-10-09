@@ -31,6 +31,8 @@
         <file>icons/time.png</file>
         <file>icons/add.png</file>
         <file>icons/search.png</file>
+        <file>icons/arrow-down.png</file>
+        <file>icons/arrow-right.png</file>
 
         <file>picture/avatar.jpg</file>
     </qresource>

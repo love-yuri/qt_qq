@@ -824,8 +824,8 @@ QFrame {border:none;}</string>
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>498</width>
-                    <height>1042</height>
+                    <width>328</width>
+                    <height>16</height>
                    </rect>
                   </property>
                  </widget>
@@ -900,8 +900,8 @@ QFrame {border:none;}</string>
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>974</width>
-                        <height>408</height>
+                        <width>46</width>
+                        <height>16</height>
                        </rect>
                       </property>
                      </widget>
