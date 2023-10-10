@@ -14,6 +14,7 @@
 #include <qboxlayout.h>
 #include <qfontmetrics.h>
 #include <qlineedit.h>
+#include <qlistwidget.h>
 #include <qnamespace.h>
 #include <qpushbutton.h>
 #include <qscrollarea.h>
@@ -39,27 +40,68 @@ MainWindow::MainWindow(QMainWindow *parent) :
   window(new QWidget(this)),
   client(new TcpClient(this)) {
   ui->setupUi(this);
-  yuri::Tools::init();
 
+  /* 初始化工作 */
+  yuri::Tools::init();
   yuri::Tools::loadQss(":qss/index.qss", this);
   yuri::Tools::loadQss(":qss/left_wid.qss", ui->left_wid);
   yuri::Tools::loadQss(":qss/message_w.qss", ui->message_w);
 
   ui->msg_main_sp->setSizes({ 700, 500});
 
-  // client->start("127.0.0.1", 2078);
-  // if (client->login("yuri", "miku2078")) {
-  //   client->startToRead();
-  // }
+  client->start("127.0.0.1", 2078);
+  if (client->login("yuri", "miku2078")) {
+    client->startToRead();
+  }
+
+  /* 添加长选框 */
   addScrollArea();
 
   connect(ui->contack_person_b, &ToolButton::clicked, [this]() {
     ui->stackedWidget->setCurrentIndex(1);
+      if (client->isLogin()) {
+        QListWidget *w = new QListWidget();
+        QString ret = client->sendCommand(C_USERS_SIZE);
+        int size = 0;
+        for (QString fd : ret.split(",")) {
+          size++;
+          QPushButton *button = new QPushButton(fd);
+          button->setFixedHeight(60);
+          button->setContentsMargins(0,0,0,0);
+          QListWidgetItem *it = new QListWidgetItem();
+          it->setSizeHint(QSize(200, 60));
+          w->setContentsMargins(0,0,0,0);
+          w->addItem(it);
+          w->setItemWidget(it, button);
+        }
+        w->setFixedHeight(size * 60 + 2);
+        ui->scrollAreaWidgetContents->layout()->addWidget(w);
+      }
   });
 
   connect(ui->message_b, &ToolButton::clicked, [this]() {
     ui->stackedWidget->setCurrentIndex(0);
   });
+
+  auto layout = ui->scrollAreaWidgetContents->layout();
+  layout->setAlignment(Qt::AlignTop);
+
+  for (int j = 0; j < 3; j++) {
+    QListWidget *w = new QListWidget();
+    for(int i = 0; i < 7; i++)
+    {
+      QPushButton *button = new QPushButton(QString("%1").arg(i,5));
+      button->setFixedHeight(60);
+      button->setContentsMargins(0,0,0,0);
+      QListWidgetItem *it = new QListWidgetItem();
+      it->setSizeHint(QSize(200, 60));
+      w->setContentsMargins(0,0,0,0);
+      w->addItem(it);
+      w->setItemWidget(it, button);
+    }
+    w->setFixedHeight(422);
+    layout->addWidget(w);
+  }
 
   show();
 }

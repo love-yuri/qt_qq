@@ -1,8 +1,22 @@
-QPushButton, QToolButton , QLineEdit{
-    background-color: none;
-    border: none;
+QPushButton,
+QToolButton,
+QLineEdit {
+  background-color: none;
+  border: none;
 }
 
 QLineEdit {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
+
+QSplitter::handle::section {
+  background-color: #e8e8e8;
+  width: 2px;
+  border: none;
+}
+
+QScrollArea {
+  border: none;
+}
+
+

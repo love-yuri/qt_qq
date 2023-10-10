@@ -7,6 +7,7 @@
 
 TcpClient::TcpClient(QObject *parent) :
   QTcpSocket(parent) {
+  is_login = false;
   connect(this, &TcpClient::recv, [this](const QByteArray &msg) {
     write(msg);
   });
@@ -69,6 +70,7 @@ bool TcpClient::login(const QString &username, const QString &password) {
   int ret = write(reinterpret_cast<char *>(&user), sizeof(UserInfo));
   if (ret > 0 && getMsgState() == LOGIN_SUCCESS) {
     qdebug << "登陆成功!";
+    is_login = true;
     return true;
   } else {
     return false;
@@ -91,6 +93,10 @@ bool TcpClient::setMsgState(MsgState state, unsigned int time_out) {
   MsgState c(state);
   int ret = QTcpSocket::write(QByteArray(&c, 1));
   return ret == 1 && waitForBytesWritten(time_out);
+}
+
+bool TcpClient::isLogin() const {
+  return is_login;
 }
 
 void TcpClient::startToRead() {

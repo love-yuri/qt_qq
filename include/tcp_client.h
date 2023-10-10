@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-09-28 16:55:58
- * @LastEditTime: 2023-10-06 19:47:02
+ * @LastEditTime: 2023-10-10 21:47:38
  * @Description: tcp客户端
  */
 #ifndef TCP_CLIENT_H
@@ -48,6 +48,8 @@ public:
   /* 发送指令 */
   QString sendCommand(MsgState com);
 
+  bool isLogin() const;
+
 signals:
   /* 关联写入信息 */
   void recv(const QByteArray &);
@@ -57,7 +59,7 @@ signals:
 
   /* 获得具体信息 */
   void getMsg(const QByteArray);
-  
+
 private:
   bool is_login;
   QMutex mutex;
