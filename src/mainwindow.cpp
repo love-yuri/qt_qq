@@ -47,36 +47,32 @@ MainWindow::MainWindow(QMainWindow *parent) :
   yuri::Tools::loadQss(":qss/left_wid.qss", ui->left_wid);
   yuri::Tools::loadQss(":qss/message_w.qss", ui->message_w);
 
-  ui->msg_main_sp->setSizes({ 700, 500});
+  /* 添加长选框 */
+  addScrollArea();
 
+  ui->msg_main_sp->setSizes({ 700, 500});
+  
   client->start("127.0.0.1", 2078);
   if (client->login("yuri", "miku2078")) {
     client->startToRead();
   }
+  if (client->isLogin()) {
+    ui->msg_scroll->layout()->setAlignment(Qt::AlignTop);
+    QListWidget *w = new QListWidget();
+    QString ret = client->sendCommand(C_USERS_SIZE);
+    int size = 0;
+    for (QString fd : ret.split(",")) {
+      MsgInfo *info = new MsgInfo;
+      size++;
+      info->setTitle(fd);
+      ui->msg_scroll->layout()->addWidget(info);
+    }
+  }
 
-  /* 添加长选框 */
-  addScrollArea();
+  
 
   connect(ui->contack_person_b, &ToolButton::clicked, [this]() {
     ui->stackedWidget->setCurrentIndex(1);
-      if (client->isLogin()) {
-        QListWidget *w = new QListWidget();
-        QString ret = client->sendCommand(C_USERS_SIZE);
-        int size = 0;
-        for (QString fd : ret.split(",")) {
-          size++;
-          QPushButton *button = new QPushButton(fd);
-          button->setFixedHeight(60);
-          button->setContentsMargins(0,0,0,0);
-          QListWidgetItem *it = new QListWidgetItem();
-          it->setSizeHint(QSize(200, 60));
-          w->setContentsMargins(0,0,0,0);
-          w->addItem(it);
-          w->setItemWidget(it, button);
-        }
-        w->setFixedHeight(size * 60 + 2);
-        ui->scrollAreaWidgetContents->layout()->addWidget(w);
-      }
   });
 
   connect(ui->message_b, &ToolButton::clicked, [this]() {
@@ -86,7 +82,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
   auto layout = ui->scrollAreaWidgetContents->layout();
   layout->setAlignment(Qt::AlignTop);
 
-  for (int j = 0; j < 3; j++) {
+  for (int j = 0; j < 1; j++) {
     QListWidget *w = new QListWidget();
     for(int i = 0; i < 7; i++)
     {
