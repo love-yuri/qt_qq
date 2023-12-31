@@ -104,7 +104,7 @@ void TcpClient::startToRead() {
     static int head_size = sizeof(MsgHead);
     if (bytesAvailable() < head_size) {
       // qdebug << "正在获得头!";
-      waitForReadyRead(-1);
+      waitForReadyRead();
     }
     char head[head_size];
     read(head, head_size);
